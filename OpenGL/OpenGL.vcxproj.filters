@@ -41,12 +41,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader.vs">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="shader.frag">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="wooden_texture.vs">
       <Filter>Source Files</Filter>
     </None>
