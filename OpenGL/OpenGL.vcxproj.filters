@@ -39,6 +39,9 @@
     <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="transformation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="wooden_texture.vs">
