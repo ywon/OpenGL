@@ -39,7 +39,13 @@
     <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="transformation.cpp">
+    <ClCompile Include="wooden_happy_square.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rotation_happy_square.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rotation_diff_ver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,5 +56,22 @@
     <None Include="wooden_texture.frag">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="rotation.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="rotation.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="rotation_2.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="rotation_2.fs">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Shader_2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
