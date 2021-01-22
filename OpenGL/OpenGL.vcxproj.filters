@@ -51,6 +51,9 @@
     <ClCompile Include="coordinate_system_wooden_smile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="wooden_texture.vs">
@@ -75,6 +78,12 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="6.1.coordinate_system.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="6.2.coordinate_systems.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="6.2.coordinate_systems.fs">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
