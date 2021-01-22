@@ -54,6 +54,9 @@
     <ClCompile Include="cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="10_cubes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="wooden_texture.vs">
@@ -84,6 +87,12 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="6.2.coordinate_systems.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="6.3.coordinate_systems.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="6.3.coordinate_systems.fs">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
