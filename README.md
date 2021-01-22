@@ -1,2 +1,4 @@
 # OpenGL
-with https://learnopengl.com/
+with https://learnopengl.com/ by JoeyDeVries
+
+
