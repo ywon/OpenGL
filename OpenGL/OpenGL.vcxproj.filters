@@ -57,6 +57,12 @@
     <ClCompile Include="10_cubes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="camera_keyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="wooden_texture.vs">
@@ -93,6 +99,18 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="6.3.coordinate_systems.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="camera.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="camera.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="camera_keyboard.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="camera_keyboard.fs">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

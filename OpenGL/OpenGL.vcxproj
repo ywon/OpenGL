@@ -146,7 +146,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="10_cubes.cpp" />
+    <ClCompile Include="10_cubes.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="camera_keyboard.cpp" />
     <ClCompile Include="coordinate_system_wooden_smile.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -190,6 +196,10 @@
     <None Include="6.2.coordinate_systems.vs" />
     <None Include="6.3.coordinate_systems.fs" />
     <None Include="6.3.coordinate_systems.vs" />
+    <None Include="camera.fs" />
+    <None Include="camera.vs" />
+    <None Include="camera_keyboard.fs" />
+    <None Include="camera_keyboard.vs" />
     <None Include="rotation.fs" />
     <None Include="rotation.vs" />
     <None Include="rotation_2.fs" />
