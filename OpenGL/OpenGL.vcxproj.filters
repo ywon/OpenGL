@@ -63,6 +63,9 @@
     <ClCompile Include="camera_keyboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="camera_advanced.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="wooden_texture.vs">
@@ -111,6 +114,12 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="camera_keyboard.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="camera_advanced.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="camera_advanced.fs">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
