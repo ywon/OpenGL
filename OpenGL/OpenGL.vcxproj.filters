@@ -66,6 +66,9 @@
     <ClCompile Include="camera_advanced.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="light_color.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="wooden_texture.vs">
@@ -120,6 +123,18 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="camera_advanced.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="color.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="color.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="light_cube.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="light_cube.fs">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
