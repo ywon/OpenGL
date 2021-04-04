@@ -1,0 +1,273 @@
+#include <GL/glut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <math.h>
+#include <cstdlib>
+#include <time.h>
+
+GLfloat radius = 0.1; //공의 반지름
+GLfloat cue_ball_speedx = 0.0;  //수구의 속도
+GLfloat cue_ball_speedy = 0.0;
+GLfloat object_ball_speedx = 0.0;  //적구의 속도
+GLfloat object_ball_speedy = 0.0;
+GLfloat cue_speed_reduce = 1.0;  //수구의 속도 감소
+GLfloat object_speed_reduce = 1.0; //적구의 속도 감소
+
+int cue_ball_WallCollision = 0; //수구 벽에 부딪힌 횟수 count
+int object_ball_WallCollision = 0; // 적구 벽에 부딪힌 횟수 count
+int cue_ball_collflag = 0; // 어느 벽에 부딪혔는지 check
+int object_ball_collflag = 0;
+int ball_collision_count = 0; //공끼리 부딪힌 경우 count
+
+
+GLfloat Random_Position() { //수구 랜덤 포지션 설정 함수
+	float position;
+	srand(time(NULL));
+	if ((rand() % 10) % 2 == 0) {
+		position = (rand() % 10) / 10.0;
+	}
+	else {
+		position = -(rand() % 10) / 10.0;
+	}
+	return position;
+}
+
+GLfloat num = Random_Position();
+GLfloat cue_ball_DeltaX = num; // 수구의 x좌표
+GLfloat cue_ball_DeltaY = -0.8; // 수구의 y좌표
+GLfloat object_ball_DeltaX = 0.0; //적구의 x좌표
+GLfloat object_ball_DeltaY = 0.8; //적구의 y좌표
+
+
+void Draw_cue_ball(float cx, float cy, float r) //수구 그리기(빨간색)
+{
+	float x1, y1, x2, y2;
+	float angle;
+	double radius = r;
+
+
+	x1 = cx, y1 = cy;
+	glColor3f(1.0, 0.0, 0.0);
+
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(x1, y1);
+
+	for (angle = 0.01f; angle <= 2 * 3.14f + 0.2; angle += 0.2)
+	{
+		x2 = x1 - sin(angle) * radius;
+		y2 = y1 + cos(angle) * radius;
+		glVertex2f(x2, y2);
+	}
+
+	glEnd();
+}
+
+void Draw_object_ball(float cx, float cy, float r) //적구 그리기(파란색)
+{
+	float x1, y1, x2, y2;
+	float angle;
+	double radius = r;
+
+
+	x1 = cx, y1 = cy;
+	glColor3f(0.0, 0.0, 1.0);
+
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2f(x1, y1);
+
+	for (angle = 0.01f; angle <= 2 * 3.14f + 0.2; angle += 0.2)
+	{
+		x2 = x1 - sin(angle) * radius;
+		y2 = y1 + cos(angle) * radius;
+		glVertex2f(x2, y2);
+	}
+
+	glEnd();
+}
+
+void MyDisplay() {
+	glClear(GL_COLOR_BUFFER_BIT);
+	Draw_object_ball(object_ball_DeltaX, object_ball_DeltaY, radius);
+	Draw_cue_ball(cue_ball_DeltaX, cue_ball_DeltaY, radius);
+	glutSwapBuffers();
+}
+
+void Balls_Collision() { //수구와 적구가 부딪힌 경우
+	float disX = cue_ball_DeltaX - object_ball_DeltaX;
+	float disY = cue_ball_DeltaY - object_ball_DeltaY;
+	float Distance = sqrt(pow(disX, 2) + pow(disY, 2));
+
+	if (Distance <= 0.2) {
+		ball_collision_count++;
+	}
+}
+
+void CueBall_WallCollision() { // 수구가 벽에 부딪힌 경우  
+	if (cue_ball_DeltaX <= -1.9){
+		cue_ball_WallCollision++;
+		cue_ball_collflag = 1; //left wall
+	}
+	if (cue_ball_DeltaY >= 0.9) {
+		cue_ball_WallCollision++;
+		cue_ball_collflag = 2; //upper wall
+	}
+	if (cue_ball_DeltaX >= 1.9) {
+		cue_ball_WallCollision++;
+		cue_ball_collflag = 3; //right wall
+	}
+	if (cue_ball_DeltaY <= -0.9) {
+		cue_ball_WallCollision++;
+		cue_ball_collflag = 4; //bottom wall
+	}
+}
+
+void ObjectBall_WallCollision() { // 적구가 벽에 부딪힌 경우
+	if (object_ball_DeltaX <= -1.9) {
+		object_ball_WallCollision++;
+		object_ball_collflag = 1; //left wall
+	}
+	if (object_ball_DeltaY >= 0.9) {
+		object_ball_WallCollision++;
+		object_ball_collflag = 2; //upper wall
+	}
+	if (object_ball_DeltaX >= 1.9) {
+		object_ball_WallCollision++;
+		object_ball_collflag = 3; //right wall
+	}
+	if (object_ball_DeltaY <= -0.9) {
+		object_ball_WallCollision++;
+		object_ball_collflag = 4; //bottom wall
+	}
+}
+
+void MyTimer(int Value) {
+
+	Balls_Collision();
+	CueBall_WallCollision();
+	ObjectBall_WallCollision();
+
+
+	if (ball_collision_count == 1) { //공끼리 처음으로 한 번 부딪혔을 때
+		float current_speed = cue_ball_speedy;
+		cue_ball_speedx += current_speed * sqrt(3) / 2;
+		cue_ball_speedy += current_speed * (1 / 2);
+		object_ball_speedx += current_speed * (-1);
+		object_ball_speedy += current_speed * sqrt(3) / 2;
+	}
+
+	if ((ball_collision_count==4)&&(object_ball_WallCollision>0)&&(cue_ball_WallCollision>0)) { //수구와 적구가 움직임 중에 부딪힌 경우
+		cue_ball_speedx = 0;
+		cue_ball_speedy = 0;
+		object_ball_speedx = 0;
+		object_ball_speedy = 0;
+	}
+
+	if (cue_ball_collflag != 0) { //수구가 벽에 부딪힌 경우 방향 전환
+		if (cue_ball_collflag == 1) {
+			cue_ball_DeltaX = -1.9;
+			cue_ball_speedx = cue_ball_speedx * (-0.8);
+			cue_ball_collflag = 0;
+		}
+		if (cue_ball_collflag == 2) {
+			cue_ball_DeltaY = 0.9;
+			cue_ball_speedy = cue_ball_speedy * (-0.8);
+			cue_ball_collflag = 0;
+		}
+		if (cue_ball_collflag == 3) {
+			cue_ball_DeltaX = 1.9;
+			cue_ball_speedx = cue_ball_speedx * (-0.8);
+			cue_ball_collflag = 0;
+		}
+		if (cue_ball_collflag == 4) {
+			cue_ball_DeltaY = -0.9;
+			cue_ball_speedy = cue_ball_speedy * (-0.8);
+			cue_ball_collflag = 0;
+		}
+	}
+
+	if (object_ball_collflag != 0) { //적구가 벽에 부딪힌 경우 방향 전환
+		if (object_ball_collflag == 1) {
+			object_ball_DeltaX = -1.9;
+			object_ball_speedx = object_ball_speedx * (-0.8);
+			object_ball_collflag = 0;
+		}
+		if (object_ball_collflag == 2) {
+			object_ball_DeltaY = 0.9;
+			object_ball_speedy = object_ball_speedy * (-0.8);
+			object_ball_collflag = 0;
+		}
+		if (object_ball_collflag == 3) {
+			object_ball_DeltaX = 1.9;
+			object_ball_speedx = object_ball_speedx * (-0.8);
+			object_ball_collflag = 0;
+		}
+		if (object_ball_collflag == 4) {
+			object_ball_DeltaY = -0.9;
+			object_ball_speedy = object_ball_speedy * (-0.8);
+			object_ball_collflag = 0;
+		}
+	}
+
+	if (cue_ball_WallCollision == 2) { //수구 2쿠션 후, 속도 slow + stop
+		cue_ball_speedx = cue_ball_speedx * cue_speed_reduce;
+		cue_ball_speedy = cue_ball_speedy * cue_speed_reduce;
+		cue_speed_reduce -= 0.0015;
+	}
+
+	if (object_ball_WallCollision == 3) { //적구 3쿠션 후, 속도 slow + stop
+		object_ball_speedx = object_ball_speedx * object_speed_reduce;
+		object_ball_speedy = object_ball_speedy * object_speed_reduce;
+		object_speed_reduce -= 0.001;
+	}
+
+	cue_ball_DeltaX = cue_ball_DeltaX + cue_ball_speedx;
+	cue_ball_DeltaY = cue_ball_DeltaY + cue_ball_speedy;	
+	object_ball_DeltaX = object_ball_DeltaX + object_ball_speedx;
+	object_ball_DeltaY = object_ball_DeltaY + object_ball_speedy;
+
+	glutPostRedisplay();
+	glutTimerFunc(10, MyTimer, 1); //msec
+}
+
+
+void MyKeyboard(unsigned char KeyPressed, int X, int Y) { //키보드 설정
+	switch (KeyPressed) {
+	case 'a':
+		cue_ball_DeltaX -= 0.01; //수구 왼쪽으로 이동
+		break;
+	case 'd':
+		cue_ball_DeltaX += 0.01; //수구 오른쪽으로 이동
+		break;
+	case 's':
+		cue_ball_DeltaY -= 0.01;  //수구 아래쪽으로 이동
+		break;
+	case 'w':
+		cue_ball_DeltaY += 0.01;  //수구 위쪽으로 이동
+		break;
+	case 'z':
+		cue_ball_speedy = 0.01;  //당구대로 수구를 때리는 명령 
+		break;
+	case 'q':  //exit
+		exit(0);
+		break;
+	}
+}
+
+int main(int argc, char** argv) {
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
+	glutInitWindowSize(800, 400);
+	glutInitWindowPosition(100, 0);
+	glutCreateWindow("201903388 조예원");
+
+	glClearColor(0.0, 1.0, 0.0, 1.0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-2.0, 2.0, -1.0, 1.0, -1.0, 1.0);
+
+	glutDisplayFunc(MyDisplay);
+	glutKeyboardFunc(MyKeyboard);
+	glutTimerFunc(40, MyTimer, 1);
+	glutMainLoop();
+	return 0;
+}
